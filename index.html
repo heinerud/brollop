@@ -262,7 +262,8 @@
   </footer>
 
   <script>
-    const RECIPIENT = 'joel.heinerud@gmail.com';
+    const RECIPIENT_OSA = 'lisaochjoel@heinerud.se';
+    const RECIPIENT_TAL = 'toastmaster@heinerud.se';
 
     const NARVARO_LABELS = {
       hela_helgen: 'Hela helgen',
@@ -341,31 +342,30 @@
     }
 
     // ── mailto helper ─────────────────────────────────────────
-    function openMailto(subject, body) {
+    function openMailto(recipient, subject, body) {
       window.location.href =
-        `mailto:${RECIPIENT}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     }
 
     // ── OSA form ──────────────────────────────────────────────
     document.getElementById('form-osa').addEventListener('submit', e => {
       e.preventDefault();
       const f = e.target;
-      const sallskap  = f.sallskap.value.trim();
       const overnight = (f.querySelector('[name="overnight"]:checked')?.value) || '—';
       const info      = f.info.value.trim();
       const personer  = collectPersoner();
+      const firstNamn = personer[0]?.namn || 'Gäst';
 
       const personLines = personer
         .map(p => `  - ${p.namn || '(inget namn)'}: ${p.narvaro}${p.mat ? ` (mat: ${p.mat})` : ''}`)
         .join('\n');
 
       const body =
-        `Sällskap: ${sallskap}\n\n` +
         `Gäster:\n${personLines}\n\n` +
         `Övernattning: ${overnight}\n\n` +
         `Övrig info: ${info || '—'}`;
 
-      openMailto(`OSA: ${sallskap}`, body);
+      openMailto(RECIPIENT_OSA, `OSA: ${firstNamn}`, body);
     });
 
     // ── Tal form ──────────────────────────────────────────────
@@ -381,7 +381,7 @@
         `Beskrivning: ${beskrivning}\n\n` +
         `Beräknad tid: ${tid} minuter`;
 
-      openMailto(`Tal/framträdande: ${namn}`, body);
+      openMailto(RECIPIENT_TAL, `Tal/framträdande: ${namn}`, body);
     });
   </script>
 
