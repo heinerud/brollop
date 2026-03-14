@@ -343,6 +343,12 @@ section:nth-child(even) {
   .map-embed iframe { height: 320px; }
 }
 
+.tal-intro {
+  font-size: 1.05rem;
+  margin-bottom: 2rem;
+  max-width: 540px;
+}
+
 .dresscode {
   margin-top: 2.5rem;
   padding-left: 1rem;
