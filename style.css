@@ -1,0 +1,598 @@
+/* ============================================================
+   THEME — change colors here, everything updates automatically
+   ============================================================ */
+:root {
+  --bg:        #FAF8F4;
+  --accent:    #7A8C6E;
+  --accent-dk: #5C6B52;
+  --text:      #2C2C2C;
+  --subtle:    #C9B99A;
+  --surface:   #FFFFFF;
+  --border:    #E8E0D4;
+  --radius:    6px;
+  --max-w:     860px;
+}
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Jost', sans-serif;
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+img { display: block; max-width: 100%; }
+
+a { color: var(--accent-dk); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+h1, h2, h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+/* ============================================================
+   NAV
+   ============================================================ */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+
+.nav-brand {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.25rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--text);
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+
+.nav-links a {
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text);
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(--accent); text-decoration: none; }
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero {
+  text-align: center;
+  padding: 7rem 2rem 6rem;
+  background: var(--bg);
+}
+
+.hero-names {
+  font-size: clamp(3.5rem, 10vw, 7rem);
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+
+.hero-ampersand {
+  color: var(--accent);
+}
+
+.hero-divider {
+  width: 48px;
+  height: 1px;
+  background: var(--subtle);
+  margin: 1.5rem auto;
+}
+
+.hero-date {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.35rem;
+  font-style: italic;
+  color: var(--text);
+  opacity: 0.75;
+}
+
+.hero-location {
+  margin-top: 0.4rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--subtle);
+}
+
+/* ============================================================
+   SECTIONS
+   ============================================================ */
+section {
+  padding: 5rem 2rem;
+}
+
+section:nth-child(even) {
+  background: var(--surface);
+}
+
+.section-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
+
+.section-title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  margin-bottom: 0.5rem;
+}
+
+.section-subtitle {
+  color: var(--subtle);
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 3rem;
+}
+
+/* ============================================================
+   WELCOME
+   ============================================================ */
+.welcome-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.welcome-text p {
+  margin-bottom: 0.9rem;
+  font-size: 1.05rem;
+  color: var(--text);
+  opacity: 0.85;
+}
+
+.welcome-text p:last-child { margin-bottom: 0; }
+
+.welcome-text .section-title { margin-bottom: 1.25rem; }
+
+.welcome-image img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: var(--radius);
+  background: var(--border);   /* visible while photo is missing */
+}
+
+@media (max-width: 700px) {
+  .welcome-inner {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .welcome-image { order: -1; }
+  .welcome-image img { aspect-ratio: 4 / 3; }
+}
+
+/* ============================================================
+   INFORMATION — program cards
+   ============================================================ */
+.program-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.program-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.75rem 1.5rem;
+}
+
+.program-card-day {
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.4rem;
+}
+
+.program-card-title {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+}
+
+.program-events {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.program-event {
+  display: flex;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+}
+
+.program-event-time {
+  color: var(--subtle);
+  white-space: nowrap;
+  flex-shrink: 0;
+  width: 3.5rem;
+}
+
+.venues {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+
+.venue-card {
+  padding: 1.5rem;
+  border-left: 3px solid var(--accent);
+}
+
+.venue-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--subtle);
+  margin-bottom: 0.4rem;
+}
+
+.venue-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem;
+  margin-bottom: 0.3rem;
+}
+
+.venue-address {
+  font-size: 0.88rem;
+  color: var(--text);
+  opacity: 0.7;
+}
+
+.venue-map {
+  display: inline-block;
+  margin-top: 0.6rem;
+  font-size: 0.82rem;
+  letter-spacing: 0.05em;
+  color: var(--accent-dk);
+}
+
+.places {
+  margin-top: 3rem;
+  margin-bottom: 2.5rem;
+}
+
+.places-title {
+  font-size: 1.1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;
+  color: var(--subtle);
+  margin-bottom: 1.25rem;
+}
+
+.places-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+.place-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.place-img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  background: var(--border);
+}
+
+.place-card-body {
+  padding: 1.25rem;
+}
+
+.place-desc {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  opacity: 0.75;
+}
+
+.dresscode {
+  margin-top: 2.5rem;
+  padding-left: 1rem;
+  border-left: 3px solid var(--accent);
+}
+
+.dresscode-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem;
+  margin-top: 0.4rem;
+}
+
+/* ============================================================
+   BOENDE
+   ============================================================ */
+.boende-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  max-width: 680px;
+  margin-bottom: 2.5rem;
+}
+
+.boende-alt {
+  padding-left: 1rem;
+  border-left: 3px solid var(--accent);
+}
+
+.boende-alt p {
+  margin-top: 0.4rem;
+}
+
+/* ============================================================
+   FORMS
+   ============================================================ */
+.form-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2.5rem;
+  max-width: 640px;
+}
+
+section:nth-child(even) .form-card {
+  background: var(--bg);
+}
+
+.form-group {
+  margin-bottom: 1.4rem;
+}
+
+label {
+  display: block;
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.45rem;
+  color: var(--text);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="number"],
+textarea,
+select {
+  width: 100%;
+  padding: 0.65rem 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Jost', sans-serif;
+  font-size: 0.95rem;
+  transition: border-color 0.2s;
+  appearance: none;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+textarea { resize: vertical; min-height: 100px; }
+
+/* Radio groups */
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.radio-option input[type="radio"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--accent);
+  flex-shrink: 0;
+}
+
+/* Person cards */
+.person-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.person-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem 1.25rem 1rem;
+  position: relative;
+}
+
+section:nth-child(even) .person-card {
+  background: var(--surface);
+}
+
+.person-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.9rem;
+}
+
+.person-card-label {
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.btn-remove {
+  background: none;
+  border: none;
+  color: var(--subtle);
+  font-size: 1.1rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0.1rem 0.3rem;
+  transition: color 0.2s;
+}
+
+.btn-remove:hover { color: #c0392b; }
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.7rem 1.6rem;
+  border-radius: var(--radius);
+  font-family: 'Jost', sans-serif;
+  font-size: 0.82rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  border: 1px solid transparent;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.btn-primary:hover { background: var(--accent-dk); border-color: var(--accent-dk); }
+
+.btn-secondary {
+  background: transparent;
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.btn-secondary:hover { background: var(--accent); color: #fff; }
+
+.btn-add-person {
+  width: 100%;
+  justify-content: center;
+  border-style: dashed;
+  margin-bottom: 1.5rem;
+}
+
+/* Form feedback */
+.form-message {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  display: none;
+}
+
+.form-message.success {
+  display: block;
+  background: #edf5eb;
+  color: #2d6a27;
+  border: 1px solid #b7dfb2;
+}
+
+.form-message.error {
+  display: block;
+  background: #fdf0ef;
+  color: #922b21;
+  border: 1px solid #f1a9a4;
+}
+
+/* ============================================================
+   KONTAKT
+   ============================================================ */
+.contacts {
+  display: flex;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.contact-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.contact-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;
+}
+
+.contact-phone {
+  font-size: 0.95rem;
+  color: var(--accent-dk);
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer {
+  text-align: center;
+  padding: 2.5rem;
+  font-size: 0.82rem;
+  color: var(--subtle);
+  border-top: 1px solid var(--border);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 600px) {
+  .nav { padding: 0 1.2rem; }
+  .nav-links { gap: 1.2rem; }
+  .nav-links a { font-size: 0.78rem; }
+
+  section { padding: 3.5rem 1.2rem; }
+
+  .hero { padding: 5rem 1.2rem 4rem; }
+
+  .form-card { padding: 1.5rem; }
+
+  .program-grid { grid-template-columns: 1fr; }
+  .venues { grid-template-columns: 1fr; }
+}
