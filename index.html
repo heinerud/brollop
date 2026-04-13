@@ -156,7 +156,6 @@
   <section id="boende">
     <div class="section-inner">
       <h2 class="section-title">Boende</h2>
-      <p class="section-subtitle">Övernattning på Årås</p>
 
       <div class="section-prose">
         <p>Vi har bokat samtliga rum på Årås säteri. Det är mysiga vandrarhemsrum med enkel och charmig standard. Handdukar och sängkläder ingår. För att fylla alla rum kommer vi fördela gästerna, vilket kan innebära att ni delar rum med ett annat sällskap.</p>
@@ -187,7 +186,7 @@
     <div class="section-inner">
       <h2 class="section-title">Gåvor</h2>
       <div class="section-prose">
-        <p>Vi önskar oss inget särskilt förutom att ni är med och firar med oss. Vill ni absolut ge något ändå får ni gärna bidra ekonomiskt till vår bröllopsresa. Swish till tärna Madeleine 0700000000</p>
+        <p>Vi önskar oss inget särskilt förutom att ni är med och firar med oss! Vill ni ändå ge oss något önskar vi ett bidrag till vår bröllopsresa. Swish till tärna Madeleine 0700000000</p>
       </div>
     </div>
   </section>
@@ -232,11 +231,11 @@
           </div>
 
           <div class="form-group">
-            <label for="osa-info">Övrigt <span style="opacity:0.5;font-size:0.85em;">(valfritt)</span></label>
+            <label for="osa-info">Övrigt <span style="opacity:0.5;font-size:0.85em;"></span></label>
             <textarea id="osa-info" name="info" placeholder="Frågor, tips, visdomsord eller annat ni vill berätta…"></textarea>
           </div>
 
-          <button type="submit" class="btn btn-primary">Skicka OSA</button>
+          <button type="submit" class="btn btn-primary">Skicka</button>
         </form>
       </div>
     </div>
@@ -268,7 +267,7 @@
             <input type="number" id="tal-tid" name="tid" min="1" max="15" placeholder="5" required />
           </div>
 
-          <button type="submit" class="btn btn-primary">Anmäl framträdande</button>
+          <button type="submit" class="btn btn-primary">Skicka</button>
         </form>
       </div>
     </div>
@@ -334,14 +333,14 @@
         </div>
         <div class="form-group" style="margin-bottom:1rem;">
           <label>Namn</label>
-          <input type="text" name="person_${index}_namn" placeholder="Förnamn Efternamn" />
+          <input type="text" name="person_${index}_namn" placeholder="Förnamn Efternamn" required />
         </div>
         <div class="form-group" style="margin-bottom:1rem;">
           <label>Närvaro</label>
           <div class="radio-group">${radios}</div>
         </div>
         <div class="form-group" style="margin-bottom:0;">
-          <label>Matpreferenser <span style="opacity:0.5;font-size:0.85em;">(valfritt)</span></label>
+          <label>Matpreferenser <span style="opacity:0.5;font-size:0.85em;"></span></label>
           <input type="text" name="person_${index}_mat" placeholder="T.ex. vegetarian, glutenintolerant…" />
         </div>
       `;
