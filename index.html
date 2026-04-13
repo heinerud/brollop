@@ -423,7 +423,7 @@
         `Gäster:\n${personLines}\n\n` +
         `Övernattning: ${overnight}\n` +
         (overnight === 'Ordnar boende själva' ? `Frukost på söndagen: ${frukost}\n` : '') +
-        `\nÖvrig info: ${info || '—'}`;
+        `\n${info || '—'}`;
 
       openMailto(RECIPIENT_OSA, `OSA: ${firstNamn}`, body);
     });
