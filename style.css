@@ -332,6 +332,12 @@ section:nth-child(even) {
   border: 1px solid var(--border);
 }
 
+.map-hint {
+  margin-top: 0.75rem;
+  font-size: 0.82rem;
+  opacity: 0.6;
+}
+
 .map-embed iframe {
   display: block;
   width: 100%;
