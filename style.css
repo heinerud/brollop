@@ -338,6 +338,54 @@ section:nth-child(even) {
   opacity: 0.6;
 }
 
+.venue-photos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.venue-photos figure {
+  margin: 0;
+}
+
+.venue-photos figcaption {
+  margin-top: 0.5rem;
+  font-size: 0.82rem;
+  opacity: 0.6;
+  text-align: center;
+}
+
+.venue-photos img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: var(--radius);
+  transition: opacity 0.2s;
+}
+
+.venue-photos img:hover { opacity: 0.85; }
+
+#lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  cursor: zoom-out;
+}
+
+#lightbox.open { display: flex; }
+
+#lightbox img {
+  max-width: 90vw;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: var(--radius);
+}
+
 .map-embed iframe {
   display: block;
   width: 100%;

@@ -113,6 +113,17 @@
       </div>
       <p class="map-hint">Klicka upp kartan i helskärm för att se beskrivning av platser.</p>
 
+      <div class="venue-photos">
+        <figure>
+          <img src="herrgarden.jpg" alt="Årås säteri" />
+          <figcaption>Säteriet</figcaption>
+        </figure>
+        <figure>
+          <img src="kvarnen.jpg" alt="Kvarnen" />
+          <figcaption>Kvarnen</figcaption>
+        </figure>
+      </div>
+
     </div>
   </section>
 
@@ -424,6 +435,27 @@
         `Beräknad tid: ${tid} minuter`;
 
       openMailto(RECIPIENT_TAL, `Tal/framträdande: ${namn}`, body);
+    });
+  </script>
+
+  <script>
+    // ── Lightbox ──────────────────────────────────────────────
+    const lightbox = document.createElement('div');
+    lightbox.id = 'lightbox';
+    lightbox.innerHTML = '<img />';
+    document.body.appendChild(lightbox);
+
+    document.querySelectorAll('.venue-photos figure img').forEach(img => {
+      img.style.cursor = 'zoom-in';
+      img.addEventListener('click', () => {
+        lightbox.querySelector('img').src = img.src;
+        lightbox.classList.add('open');
+      });
+    });
+
+    lightbox.addEventListener('click', () => lightbox.classList.remove('open'));
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') lightbox.classList.remove('open');
     });
   </script>
 
