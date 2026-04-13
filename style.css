@@ -240,19 +240,19 @@ section:nth-child(even) {
   width: 3.5rem;
 }
 
-.venues {
+.card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 1.5rem;
   margin-top: 3rem;
 }
 
-.venue-card {
+.info-card {
   padding: 1.5rem;
   border-left: 3px solid var(--accent);
 }
 
-.venue-label {
+.card-label {
   font-size: 0.75rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -260,7 +260,7 @@ section:nth-child(even) {
   margin-bottom: 0.4rem;
 }
 
-.venue-name {
+.info-card-title {
   font-family: 'Cormorant Garamond', serif;
   font-size: 1.3rem;
   margin-bottom: 0.3rem;
@@ -349,22 +349,17 @@ section:nth-child(even) {
   max-width: 540px;
 }
 
-.dresscode {
-  margin-top: 2.5rem;
-  padding-left: 1rem;
-  border-left: 3px solid var(--accent);
-}
-
-.dresscode-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.3rem;
-  margin-top: 0.4rem;
+.info-card-desc {
+  font-size: 0.88rem;
+  color: var(--text);
+  opacity: 0.8;
+  line-height: 1.6;
 }
 
 /* ============================================================
    BOENDE
    ============================================================ */
-.boende-text {
+.section-prose {
   display: flex;
   flex-direction: column;
   gap: 0.9rem;
@@ -372,12 +367,12 @@ section:nth-child(even) {
   margin-bottom: 2.5rem;
 }
 
-.boende-alt {
+.section-note {
   padding-left: 1rem;
   border-left: 3px solid var(--accent);
 }
 
-.boende-alt p {
+.section-note p {
   margin-top: 0.4rem;
 }
 
@@ -618,5 +613,5 @@ footer {
   .form-card { padding: 1.5rem; }
 
   .program-grid { grid-template-columns: 1fr; }
-  .venues { grid-template-columns: 1fr; }
+  .card-grid { grid-template-columns: 1fr; }
 }
