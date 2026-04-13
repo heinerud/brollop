@@ -175,6 +175,14 @@
             </div>
           </div>
 
+          <div class="form-group" id="frukost-group" style="display:none;">
+            <label>Frukost på söndagen</label>
+            <label class="radio-option">
+              <input type="checkbox" name="frukost" value="Ja" />
+              Ja, vi vill äta frukost på söndagen
+            </label>
+          </div>
+
           <div class="form-group">
             <label for="osa-info">Övrigt <span style="opacity:0.5;font-size:0.85em;">(valfritt)</span></label>
             <textarea id="osa-info" name="info" placeholder="Frågor, tips, visdomsord eller annat ni vill berätta…"></textarea>
@@ -314,6 +322,17 @@
     addPerson(false);
     document.getElementById('btn-add-person').addEventListener('click', () => addPerson(true));
 
+    document.querySelectorAll('[name="overnight"]').forEach(r => {
+      r.addEventListener('change', () => {
+        const showFrukost = r.value === 'Ordnar boende själva' && r.checked;
+        document.getElementById('frukost-group').style.display = showFrukost ? '' : 'none';
+        if (!showFrukost) {
+          const cb = document.querySelector('[name="frukost"]');
+          if (cb) cb.checked = false;
+        }
+      });
+    });
+
     function collectPersoner() {
       return Array.from(document.querySelectorAll('#person-list .person-card')).map(card => {
         const idx = card.dataset.index;
@@ -336,6 +355,7 @@
       e.preventDefault();
       const f = e.target;
       const overnight = (f.querySelector('[name="overnight"]:checked')?.value) || '—';
+      const frukost   = f.querySelector('[name="frukost"]')?.checked ? 'Ja' : 'Nej';
       const info      = f.info.value.trim();
       const personer  = collectPersoner();
       const firstNamn = personer[0]?.namn || 'Gäst';
@@ -346,8 +366,9 @@
 
       const body =
         `Gäster:\n${personLines}\n\n` +
-        `Övernattning: ${overnight}\n\n` +
-        `Övrig info: ${info || '—'}`;
+        `Övernattning: ${overnight}\n` +
+        (overnight === 'Ordnar boende själva' ? `Frukost på söndagen: ${frukost}\n` : '') +
+        `\nÖvrig info: ${info || '—'}`;
 
       openMailto(RECIPIENT_OSA, `OSA: ${firstNamn}`, body);
     });
