@@ -218,11 +218,11 @@
             <label>Övernattning</label>
             <div class="radio-group">
               <label class="radio-option">
-                <input type="radio" name="overnight" value="Vill övernatta på Årås" required />
+                <input type="radio" name="overnight" value="aras" required />
                 Vill övernatta på Årås
               </label>
               <label class="radio-option">
-                <input type="radio" name="overnight" value="Ordnar boende själva" />
+                <input type="radio" name="overnight" value="ordnar_sjalva" />
                 Ordnar boende själva
               </label>
             </div>
@@ -318,7 +318,7 @@
       hela_helgen: 'Hela helgen',
       vigsel_fest: 'Vigsel & fest',
       bara_vigsel: 'Bara vigsel',
-      kommer_ej:   'Kan tyvärr inte komma',
+      kan_inte:    'Kan tyvärr inte komma',
     };
 
     // ── Person cards ──────────────────────────────────────────
@@ -344,6 +344,10 @@
         <div class="form-group" style="margin-bottom:1rem;">
           <label>Namn</label>
           <input type="text" name="person_${index}_namn" placeholder="Förnamn Efternamn" required />
+        </div>
+        <div class="form-group" style="margin-bottom:1rem;">
+          <label>E-post</label>
+          <input type="email" name="person_${index}_epost" placeholder="namn@exempel.se" required />
         </div>
         <div class="form-group" style="margin-bottom:1rem;">
           <label>Närvaro</label>
@@ -381,7 +385,7 @@
 
     document.querySelectorAll('[name="overnight"]').forEach(r => {
       r.addEventListener('change', () => {
-        const showFrukost = r.value === 'Ordnar boende själva' && r.checked;
+        const showFrukost = r.value === 'ordnar_sjalva' && r.checked;
         document.getElementById('frukost-group').style.display = showFrukost ? '' : 'none';
         if (!showFrukost) {
           const cb = document.querySelector('[name="frukost"]');
@@ -394,10 +398,11 @@
       return Array.from(document.querySelectorAll('#person-list .person-card')).map(card => {
         const idx = card.dataset.index;
         const namn = (card.querySelector(`[name="person_${idx}_namn"]`)?.value || '').trim();
+        const epost = (card.querySelector(`[name="person_${idx}_epost"]`)?.value || '').trim();
         const narvaroEl = card.querySelector(`[name="person_${idx}_narvaro"]:checked`);
-        const narvaro = narvaroEl ? NARVARO_LABELS[narvaroEl.value] : '—';
+        const narvaro = narvaroEl ? narvaroEl.value : '—';
         const mat = (card.querySelector(`[name="person_${idx}_mat"]`)?.value || '').trim();
-        return { namn, narvaro, mat };
+        return { namn, epost, narvaro, mat };
       });
     }
 
@@ -407,27 +412,123 @@
         `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     }
 
+    // ── Google Form submission ────────────────────────────────
+    const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSeFQh8yBefVThrmpvkYMfhTAshiLLIvoavDe0rPwKrGijNP6Q/formResponse';
+
+    async function submitToGoogleForm(data) {
+      await fetch(GOOGLE_FORM_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: new URLSearchParams(data),
+      });
+    }
+
+    // ── Fireworks ─────────────────────────────────────────────
+    function launchFireworks() {
+      const canvas = document.createElement('canvas');
+      canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;';
+      document.body.appendChild(canvas);
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const colors = ['#c9a96e','#e8d5b0','#8b6f47','#f5f0e8','#d4b896','#a0845c','#fff8ee','#e2c97e'];
+
+
+      // Firework particles
+      const sparks = [];
+      function explode(x, y) {
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        for (let i = 0; i < 60; i++) {
+          const angle = (i / 60) * Math.PI * 2;
+          const speed = 1.5 + Math.random() * 4;
+          sparks.push({
+            x, y,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed,
+            alpha: 1,
+            color,
+            r: 2 + Math.random() * 2,
+          });
+        }
+      }
+
+      const DURATION = 4000;
+      const burstTimes = [300, 700, 1200, 1800, 2400, 2900, 3400];
+      const timers = burstTimes.map(t => setTimeout(() => {
+        explode(
+          canvas.width * (0.2 + Math.random() * 0.6),
+          canvas.height * (0.1 + Math.random() * 0.5)
+        );
+      }, t));
+
+      let frame;
+      const start = performance.now();
+      function draw(now) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        for (let i = sparks.length - 1; i >= 0; i--) {
+          const s = sparks[i];
+          s.x += s.vx; s.y += s.vy;
+          s.vy += 0.08;
+          s.alpha -= 0.02;
+          if (s.alpha <= 0) { sparks.splice(i, 1); continue; }
+          ctx.globalAlpha = s.alpha;
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          ctx.fillStyle = s.color;
+          ctx.fill();
+          ctx.globalAlpha = 1;
+        }
+
+        if (now - start < DURATION) {
+          frame = requestAnimationFrame(draw);
+        } else {
+          timers.forEach(clearTimeout);
+          cancelAnimationFrame(frame);
+          canvas.remove();
+        }
+      }
+      requestAnimationFrame(draw);
+    }
+
     // ── OSA form ──────────────────────────────────────────────
-    document.getElementById('form-osa').addEventListener('submit', e => {
+    document.getElementById('form-osa').addEventListener('submit', async e => {
       e.preventDefault();
       const f = e.target;
-      const overnight = (f.querySelector('[name="overnight"]:checked')?.value) || '—';
-      const frukost   = f.querySelector('[name="frukost"]')?.checked ? 'Ja' : 'Nej';
-      const info      = f.info.value.trim();
-      const personer  = collectPersoner();
-      const firstNamn = personer[0]?.namn || 'Gäst';
+      const submitBtn = f.querySelector('[type="submit"]');
+      const overnightBase = f.querySelector('[name="overnight"]:checked')?.value || '';
+      const frukost       = f.querySelector('[name="frukost"]')?.checked;
+      const overnight     = overnightBase === 'ordnar_sjalva' && frukost
+                              ? 'ordnar_sjalva_vill_ha_frukost'
+                              : overnightBase;
+      const info          = f.info.value.trim();
+      const personer      = collectPersoner();
 
-      const personLines = personer
-        .map(p => `  - ${p.namn || '(inget namn)'}: ${p.narvaro}${p.mat ? ` (mat: ${p.mat})` : ''}`)
-        .join('\n');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Skickar…';
 
-      const body =
-        `Gäster:\n${personLines}\n\n` +
-        `Övernattning: ${overnight}\n` +
-        (overnight === 'Ordnar boende själva' ? `Frukost på söndagen: ${frukost}\n` : '') +
-        `\n${info || '—'}`;
-
-      openMailto(RECIPIENT_OSA, `OSA: ${firstNamn}`, body);
+      try {
+        await Promise.all(personer.map(person => submitToGoogleForm({
+          'entry.1275700963': person.namn,
+          'entry.1019865349': person.epost,
+          'entry.1043987420': person.narvaro,
+          'entry.2048971199': person.mat,
+          'entry.1910555893': overnight,
+          'entry.308973912':  info,
+        })));
+        submitBtn.textContent = 'Skickat!';
+        launchFireworks();
+        f.reset();
+        document.getElementById('person-list').innerHTML = '';
+        personCount = 0;
+        addPerson(false);
+        document.getElementById('frukost-group').style.display = 'none';
+      } catch (err) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Skicka';
+        alert('Något gick fel. Kontrollera din internetanslutning och försök igen.');
+      }
     });
 
     // ── Tal form ──────────────────────────────────────────────
