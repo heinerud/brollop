@@ -32,14 +32,21 @@ All colors are CSS custom properties in the `:root` block at the top of `style.c
 
 ## Form submission
 
-Forms build a pre-filled `mailto:` URL and open the user's email client — no backend.
+OSA submits to Google Forms via `fetch` with `mode: 'no-cors'` (response is always opaque — success/failure cannot be confirmed from JS). Speeches still uses `mailto:` to `toastmaster@heinerud.se`.
 
-- OSA sends to `lisaochjoel@heinerud.se` (`RECIPIENT_OSA` in the script)
-- Speeches sends to `toastmaster@heinerud.se` (`RECIPIENT_TAL` in the script)
+Google Form: `https://docs.google.com/forms/d/e/1FAIpQLSeFQh8yBefVThrmpvkYMfhTAshiLLIvoavDe0rPwKrGijNP6Q/formResponse`
+
+Entry IDs:
+- `entry.1275700963` — Namn
+- `entry.1019865349` — E-post
+- `entry.1043987420` — Närvaro (`hela_helgen` | `vigsel_fest` | `bara_vigsel` | `kan_inte`)
+- `entry.2048971199` — Matpreferenser
+- `entry.1910555893` — Övernattning (`aras` | `ordnar_sjalva` | `ordnar_sjalva_vill_ha_frukost`)
+- `entry.308973912`  — Övrigt
 
 ## Dynamic guest list (OSA form)
 
-`addPerson()` creates a person card with name, närvaro radio buttons, and a matpreferenser field. Cards are indexed via `data-index` and collected by `collectPersoner()` before the mailto is built. The first card is not removable.
+`addPerson()` creates a person card with namn, e-post, närvaro, and matpreferenser. Cards are indexed via `data-index` and collected by `collectPersoner()`. One Google Form response is submitted per person (in parallel). The first card is not removable.
 
 ## Images
 
